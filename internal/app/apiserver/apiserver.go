@@ -3,6 +3,7 @@ package apiserver
 import (
 	"database/sql"
 	"github.com/MegOBonus/go-rest-api/internal/app/store/sqlstore"
+	"github.com/gorilla/sessions"
 	"net/http"
 )
 
@@ -16,7 +17,8 @@ func Start(config *Config) error {
 	defer db.Close()
 
 	s := sqlstore.New(db)
-	srv := newServer(s)
+	sessionStore := sessions.NewCookieStore([]byte(config.SessionKey))
+	srv := newServer(s, sessionStore)
 	return http.ListenAndServe(config.BindAddr, srv)
 }
 
