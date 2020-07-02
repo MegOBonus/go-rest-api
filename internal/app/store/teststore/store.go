@@ -15,7 +15,7 @@ func New() *Store {
 
 func (s *Store) User() store.UserRepository {
 	if s.userRepository == nil {
-		s.userRepository = &UserRepository{s, map[string]*model.User{}}
+		s.userRepository = &UserRepository{s, map[int]*model.User{}}
 	}
 
 	return s.userRepository
